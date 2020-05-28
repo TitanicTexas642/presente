@@ -57,8 +57,10 @@ void draw_state(const level *lvl, const state *sta){
         // Initialize a Vector2 that represents the center of the entity position
         Vector2 vec = {ent.x,ent.y};
         // Draw a circle with the radius of the entity
-        DrawCircleV(vec,ent.rad,BLUE);
+            DrawCircleV(vec,ent.rad,BLUE);
+        
     }
+
 
     // Draw bullets
     for(int i=0;i<sta->n_bullets;i++){

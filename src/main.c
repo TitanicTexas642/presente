@@ -14,14 +14,13 @@ int main(int argc, char const *argv[]){
 
     InitWindow(screen_width,screen_height,"Presente - the game");
     SetTargetFPS(60);
-
     // Initialize level and fill randomly
-    level *lvl = level_new(50,40);
+    level *lvl = level_new(20,20);
     level_fill_random(lvl,6);
 
     // Initialize state (and add enemies)
     state *sta = state_new();
-    state_populate_random(lvl,sta,40);
+    state_populate_random(lvl,sta,10);
 
     // Main loop
     while(!WindowShouldClose()){

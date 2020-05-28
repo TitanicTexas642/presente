@@ -45,7 +45,8 @@ void level_fill_random(level *lvl, int wall_size){
     assert(wall_size<lvl->size_x);
     assert(wall_size<lvl->size_y);
     // Compute a good number of walls so that up to 1/10 of the level is filled
-    int n_walls = lvl->size_x*lvl->size_y/wall_size/10;
+    //int n_walls = lvl->size_x*lvl->size_y/wall_size/10;
+    int n_walls=4;
     // Add each of the walls
     for(int i=0;i<n_walls;i++){
         int vert = rand()%2; // vertical or horizontal?

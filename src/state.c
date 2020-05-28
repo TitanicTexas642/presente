@@ -25,7 +25,6 @@ state *state_new(){
 }
 
 void state_update(level *lvl, state *sta){
-
     // == Update player speed according to buttons
     // (mov_x,mov_y) is a vector that represents the position of the analog control
     float mov_x = 0;
@@ -128,7 +127,33 @@ void state_update(level *lvl, state *sta){
         // Update the number of enemies
         sta->n_enemies = new_n_enemies;
     }
-
+    for (int i = 0; i < sta->n_enemies; i++)
+    {
+        float delta_x = sta->pla.ent.x - sta->enemies[i].ent.x;
+        float delta_y = sta->pla.ent.y - sta->enemies[i].ent.y;
+        float delta_mag = sqrt(delta_x * delta_x + delta_y * delta_y);
+        if (delta_mag <= 300|| delta_mag == 0) //until player is not in enemy_fov or distance between them is 0
+        {
+            if (sta->enemies[i].kind == MINION)
+            {
+                sta->enemies[i].ent.vx = (delta_x / delta_mag) * 3;
+                sta->enemies[i].ent.vy = (delta_y / delta_mag) * 3;
+            }
+            else if (sta->enemies[i].kind == BRUTE)
+            { //then enemy kind is equal to BRUTE
+                if (sta->enemies[i].ent.vx == 0 && sta->enemies[i].ent.vy == 0)
+                {
+                    sta->enemies[i].ent.vx = (delta_x / delta_mag) * PLAYER_SPEED;
+                    sta->enemies[i].ent.vy = (delta_y / delta_mag) * PLAYER_SPEED;
+                }
+            }
+        }
+        else
+        { // enemy speed will be 0, because player is not in enemy FOV
+            sta->enemies[i].ent.vx = 0;
+            sta->enemies[i].ent.vy = 0;
+        }
+    }
 }
 
 void state_populate_random(level *lvl, state *sta, int n_enemies){
